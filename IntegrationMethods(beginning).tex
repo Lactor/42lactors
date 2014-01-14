@@ -1,0 +1,44 @@
+I would like to have my first post with a topic I find very interesting, integration methods.Since the advent of computers they have been put to use to solve scientific problems. One of the biggest uses is to do numerical computations, either massive calculations or using computers to approximate solutions. This second comes as very important, specially in differential equations when we are faced with systems which do not have an analytic solution or closed formula, like:
+
+    $latex \ddot \theta + k\sin(\theta) = 0$ - The system of a simple pendulum
+
+    $latex \begin{array} {l} \dot x = -x + ay + x^2y\\ \dot y = b -ay - x^2y \end{array}$ - Biological processes like glycolisis
+    $latex \begin{array} {l} \dot x = x(3-x-2y)\\ \dot y = y(2-x-y) \end{array}$ - Growth models of species
+
+The study of these systems (despite existing a lot of techniques to deal with them) depend on our ability to approximate the solution from the differential equations.
+
+It is for this reason that integration methods are very important. We need methods which can give us a very approximate solution with the minimum effort.
+
+You may ask "but if it is the computers that do the calculations, why do we need to minimize effort?" The answer is simple, computers aren't invincible, they have limitations, and if we ask too much from them they will take a long time to give us an answer, and sometimes we do not have that time, whether is just a scientist that needs results to continue his work or a company that needs the information as soon as possible to know what course they need to follow.
+
+
+To understand this problem we need to go back to basics and understand how a derivative works and how can we mimic that with a computer. The definition of derivative ($latex f'(x)$) of the function $latex f(x)$ is the following:
+
+$latex f'(x) = \lim_{h\to 0} = \frac{f(x+h) - f(x)}{h}$ - when this limit exists
+
+Right now we face a major problems as we want to teach the computer this idea. How can we implement a way of telling the computer to do the limit as $latex h$ goes to zero? We would need it to use numbers which get smaller and smaller, which lead us to two problems, to correctly calculate the derivative we would need to use the smallest of $latex h$ possible, which is impossible since there will be another one which is smaller; and even if we could, the computer memory does not have the precision to use such tiny values.
+
+This means that associated with any type of calculation we make, there will be an error which will depend extensively on the method we use (but more on that later).
+
+We have come to the unfortunate conclusion that we cannot do a perfect job, so our point is now to minimize the error to get the best solution, and our error will get smaller as we decrease the size of $latex h$, but as we saw before we cannot have it be infinitesimally close to zero, so we shall use a small but finite $latex h$.
+
+We can now rearrange the definition of the derivative to the following:
+
+$latex f'(x) h \approx f(x+h) - f(x)$
+
+This gives us a way of calculating the function at a point a bit ahead, provided we know the function at the current point and the value the derivative. However that is the information that the differential equation gives us. We know that a differential equation of order $latex n$ has $latex n$ constants which are determined by the initial conditions of the systems. Therefore knowing where the function starts we can build up from the rest of the solution. And the derivative? That is given by the relationship expressed by the differential equation.
+
+The method we uncovered is called the Euler's method and is the most basic integration method, the cheapest computationally but unfortunately one of the worst.
+
+The algorithm goes as follows:
+
+[code]
+Set initial value for f(t)
+while t<TMAX:
+    f(t+h) = f(t) + h * f'(t)
+    t = t+h
+[/code]
+
+One one the things you may notice right away is that it is a iterative algorithm, meaning it relies on the values we calculated already to calculate the next value, meaning that error propagates as we calculate the terms.
+
+Tomorrow I will cover how to extend this method to many variables.
