@@ -1,0 +1,8 @@
+set term png size 800,600
+set output "Euler.png"
+set xrange[0:5]
+plot exp(x), "e1.out" w l, "e0.1.out" w l,"e0.01.out" w l,"e0.001.out" w l
+
+set output "Heuns.png"
+set xrange[0:6]
+plot exp(x), "h1.out" w l, "h0.1.out" w l # ,"h0.01.out" w l,"h0.001.out" w l

@@ -1,0 +1,49 @@
+Today's article is about other numerical methods and why we need them.
+
+Before discussing other numerical methods I will first show the pitfalls of the Euler method with a few examples. Then I will show two other numerical integration methods, which act on improving the Euler's method, the improved Euler method and the Runga-Kutta method.
+
+First I will show the effect of the step size on the Euler's Method. In the following picture we have the Euler's mehtod solving the function $latex \dot x = x$ which gives rise to the exponential function.
+
+Euler's Method set size comparison
+    Euler's Method set size comparison
+
+As we can see and intuitively know, by reducing the step size the method makes our method approach the exact solution, which in this graph is covered by the approximation with 0.001 step size.
+
+Despite not having a comparison term, the time step required to get the precision we get here is too small, meaning that we need to make too many calculations and the code will run slowly.
+
+So why does the Euler's Method has a error? We are using the derivative of the function at a point $latex \bf x$ to calculate the next step, to a point $latex \bf x + \delta x why is there an error?
+
+The problem is that it is a finite step, while the real calculation of the integral the steps are infinitesimal. So by only making the step with the derivatives at the point $latex \bf x$ we are disregarding the motion of the derivative in the interval between $latex \bf x$ and $latex \bf x + \delta x$. This is the source of the error in this method.
+
+The next method tries to overcome that by taking a preemptive step and using the derivatives at the original point $latex \bf x$ and at the point $latex \bf x'$ to calculate $latex \bf x + \delta x$. This method is called improved Euler's formula or Heun's method.
+
+The algorithm is the following:
+
+[code]
+x = initial state
+while t <TMAX:
+    k1 = f(x) * DT
+    k2 = f(x+k1)*DT
+    x(t+DT) = x(t) + 0.5*(k1+k2)
+    t = t+DT
+[/code]
+
+f(x) is the vector function that returns a vector with the derivatives of $latex \bf x$.
+
+Like I said before the idea of the method is to take one first step and then use this step to calculate a the derivative of $latex \bf x$.at that point. Since we are taking the derivatives of at approximately both ends of the step, the method will give out a better value for the average derivative in the interval when compared to the Euler Method. wiki
+
+(This idea is also used in numerical integration and is more know as the trapezoid rule, wiki)
+
+Plotting the same differential equation with this method yields.
+
+Heuns
+
+Right away, we can see that the solution closes in the exact solution much faster, even though we have approximately double de calculations, we achieved the same precision with a step size of 0.1 with Heun's method as almost 0.001 in Euler's method. The same computation with 50x less calculations!
+
+This is the power of a good numerical method. By using a better method we were able to better use our resources and still get the same result. If we were tackling a big problem requiring a big server that took , for example, 50 days of computation, by using this method we could reduce this time to 1 day! Allowing the other 49 days to be used for other tasks!
+
+Note: the number of 50 is not a definite relationship between the efficiency of the two methods, it was just a value used for demonstration purposes. The correct factor will depend on the exact differential equation and implementation.
+
+Tomorrow I will introduce a new integration method. See you then!
+
+(The code used for the integration is available on github)

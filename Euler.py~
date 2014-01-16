@@ -1,0 +1,37 @@
+from math import *
+
+def f(x):
+    return x
+def p(x):
+    return cos(x)
+
+def derivative(x, type):
+    if type == 1:
+        return f(x)
+    elif type == 2:
+        return p(x)
+
+def Euler( DT, type):
+    path = str(type)+"r"+str(DT)+".out"
+    res = open(path, 'w' )
+    if type ==1:
+        x=1
+    elif type == 2:
+        x= 0
+    t = 0.
+    while t <7:
+        res.write(str(t) + " " + str(x)+ "\n")
+        x += derivative(x, type)*DT
+        t+=DT
+
+Euler(1,1)
+Euler(0.1,1)
+Euler(0.01,1)
+Euler(0.001,1)
+
+
+Euler(1,2)
+Euler(0.1,2)
+Euler(0.01,2)
+Euler(0.001,2)
+

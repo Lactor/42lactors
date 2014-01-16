@@ -1,0 +1,4 @@
+set term png size 800,600
+set output "Euler.png"
+set xrange[0:5]
+plot exp(x), "res1.out" w l, "res0.1.out" w l,"res0.01.out" w l,"res0.001.out" w l
