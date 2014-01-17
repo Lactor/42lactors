@@ -1,0 +1,41 @@
+Yesterday I covered a different integration methods, Heun's method and we covered the reason why Euler's method was not very accurate.
+
+Today I will cover another integration method Runge-Kutta, which improves on the Heun's method. Moreover I will touch on the subject of justifying why one method is better than another.
+
+The basic idea of the Runge-Kutta method is to improve on the Heun's method.
+The improve this method (Heun's) brought was to take into account the derivative not only at our current point, but also at, approximately, the end point, and from there get a better estimate of the average derivative in the interval.
+
+Using the derivative at our first test point increases the accuracy of the step since, despite not being the derivative at our desired point, it will be a good approximation to it. So by averaging it with the the derivative at our start point we get a better approximation of the average value since we'll take into some consideration the increase or decrease of the derivative in the time step.
+
+As we saw this simple idea brought a great improvement on our method, however we can think how we can try to squeeze more information out of our system. Runge-Kutta method does just that.
+
+In this reason instead of one, Runge-Kutta takes 3 trial steps and uses them to calculate approximate derivatives.
+
+The first step (k1) uses the derivative from our current point. For the second step (k2), the first step is used to calculate an approximate middle point, and from there the derivative is calculated and a step is calculated too. The third step (k3) uses the second step to again calculate a midpoint to calculate the derivative there, and from there get a full step. And the forth step uses the derivative at the end of the step k3 and calculates a step based on that derivative.
+
+Then to calculate the final step a weighted average is taken. More weight is given to the steps k2 and k3, since they are the done using derivatives taken at approximately the midpoint, assuming that the function does not vary wildly in our step size, then they will have a more representative value of the average derivative.
+
+The code is the following:
+
+[code]
+x = initial state
+while t < TMAX:
+    k1 = f(x) * DT
+    k2 = f(x+ 0.5*k1) * DT
+    k3 = f(x + 0.5*k2) *DT
+    k4 = f(x + k3) * DT
+    x = x + 1/6 * (k1 + 2*k2 + 2*k3 + k3)
+    t = t +DT
+[/code]
+
+The result for the our previous system we have:
+
+Runge
+
+Notice that for this method, the simulation with step size 1 is very close to the actual solution. Mind that the points we obtained are the points with the crosses, the lines are the junction of those points, that is the points we need to judge. The simulation with step size 0.1 cannot be distinguished from the actual solution.
+
+Again we were able to get an improvement in the efficiency of the simulation. Remember, as before that this efficiency came at the cost of more computations per step, although the overall result was better. These calculations, allow us to get a better estimate of the change of the derivative in the time step, and for this reason the method is able to better solve the differential equation for the same time step.
+
+(The code used to generate the simulation is in my Github)
+
+Thanks for reading and see you tomorrow!

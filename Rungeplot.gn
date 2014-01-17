@@ -1,0 +1,4 @@
+set term png size 800,600
+set output "Runge.png"
+set xrange[0:5]
+plot exp(x), "r1.out" w lp, "r0.1.out" w l
