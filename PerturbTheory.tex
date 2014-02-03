@@ -1,0 +1,81 @@
+In this post I will go through an introduction to perturbation theory, a method used to solve approximately differential equations that may not have solution otherwise. I will first go through the idea and then use an example, the non-linear oscillator to better explain the method.
+
+The main idea of perturbation theory is to understand our system as a function/solution we know but which has been slightly perturbed. Imagine the case of ball rolling through a downhill straight valley. If the system was "at its best", it would just go straight through the valley. However, if at the beginning we give it a little push to the side, it will go down, but also oscillate. We can think of the motion as the straight motion plus a small perturbation of the system.
+
+
+
+The idea becomes then to describe the motion $latex x(t)$ as a sum of motions, each one representing an approximation of a greater order of "smallness". Meaning $latex x = x_0 + x_1 + x_2 + x_3 + ...$ where $latex x_0 \gg x_1 \gg x_2 \gg x_3 \gg ...$. Each of these terms does not have a specific meaning by themselves, they are just parts of our approximate solution and we define each term to be associated with a power of the amplitude. In other words we have that our solution will be a power series in terms of the amplitude and since the amplitude of the perturbation is small then the series will converge (as long as the constants do not increase a lot as the order increases). Then our goal becomes to find the factors for the $latex x_i $ which are of order $latex A^i $. We do this by solving our equation for each $latex x_i $, having all the solutions for $latex x_j$ where $latex j<i $. We can then take the value of $latex x_i$ knowing the previous ones, and for the base case we have our unperturbed motion, the base of our analysis.
+
+With this introduction let's move on to the example of a non-linear oscillator.
+
+Imagine we have an oscillator which does not have a force proportional to the displacement, but the force is also dictated by higher order terms of displacement.
+
+$latex \ddot x = -\omega_0^2 x -\alpha x^2 - \beta x^3 $
+
+This is a non-linear differential equation which we don't know how to solve. However we see an important aspect, if the motion does not have a great amplitude, then we have that the terms of $latex \alpha$ and $latex \beta$ will be small, and it becomes much like a normal harmonic oscillator.
+
+If with take into account the idea of perturbations we know the solution will be a harmonic oscillator a bit perturbed and that is going to be our first step.
+
+First let's write $latex x = x_0 + x_1 + x_2 + x_3$ (we are aiming for an approximation of third order hence it is no point in having greater terms).
+
+The term of order zero of amplitude will be $latex x_0 = 0$ since it corresponds to a constant term and this is the constant solution.
+
+Now we take the first order approximation, in this case we take $latex x = x_1$ and solve for $latex x_1$
+
+$latex x_1 = -\omega_0^2 x_1 -\alpha x_1^2 -\beta x_1^3$
+
+Since $latex x_1 = O(A)$ (is of order of the amplitude) we have that $latex x_1^n = O(A^n)$, meaning that the only interesting term is the first one and we'll have the solution of the linear harmonic oscillator.
+
+$latex x_1 = A\cos(\omega t)$
+
+(We are disregarding phase since it does not alter the problem and would only make the notation more cumbersome.)
+
+Note an important thing, I wrote on the solution of $latex x_1, \omega$ and not $latex \omega_0$ this is because the motion will also affect the value of the frequency oscillations (otherwise pendulums would always have the same period for every amplitude, which is not true, it only happens when the amplitude is small).
+
+Then we need to write:
+
+$latex \omega = \omega_0 + \omega_1 + \omega_2$
+
+We know $latex \omega_0$, it will be our first frequency and notice how it does not depend on the amplitude, hence its subscript is 0.
+
+Now to find the second term, we need to find the solution of the equation to the second order of amplitude. We then include $latex x_2 $ since it is of second order in smallness.
+
+$latex \ddot x_1 + \ddot x_2 = -\omega_0^2(x_1 + x_2) - \alpha(x_1 + x_2)^2 $
+
+Substituting $latex x_1$ we get:
+
+$latex -\omega^2 A\cos(\omega t) + \ddot x_2 = -\omega_0^2 A \cos(\omega t) - \omega_0^2 x_2 - \alpha( A^2 \cos^2(\omega t)) \\
+
+-(\omega_0^2 + 2\omega_0 \omega_1) A\cos(\omega t) +\ddot x_2 = -\omega_0^2 A\cos(\omega t) - \omega_0^2 x_2 - \alpha(A^2 \cos^2(\omega t)) \\
+
+\ddot x_2 + \omega_0^2 x_2 = - \frac{\alpha A^2}{2} - 2\omega_0 \omega_1 A \cos(\omega t) -\frac{\alpha A^2}{2} \cos(2\omega t)$
+
+Now we stop and look at our equation. It now is solvable, it is the equation of a driven harmonic oscillator. However look at the driving frequency of the middle term, it is $latex \omega = \omega_0 + \omega_1$ which will be very close to $latex \omega_0$ since $latex \omega_0 \gg \omega_1$. This term will lead to effects of resonance which will make $latex x_2 $ to deviate from a small oscillation. For that not to happen it means that $latex 2\omega_0\omega_1 = 0 \Rightarrow \omega_1 = 0 $.
+
+Notice also that we neglected any terms of order greater than 2, both on $latex x_i$ and $latex \omega_i$.
+
+The solution then becomes:
+
+$latex \omega_1 = 0 \text{ and } x_2 = -\frac{\alpha A^2}{2} - \frac{\alpha A^2}{6} \cos(2\omega t) $
+
+Notice that as we wanted, $latex x_2$ is of order $latex A^2$. Now we just need to do the same process for third order approximation. Neglect the terms that have higher order of smallness, and at the end check if there are resonant terms and solve the equation. For the third order it becomes:
+
+$latex \ddot x_3 + \omega_0^2 x_3 = A^3 \left[ -\frac{1}{4} \beta - \frac{\alpha^2}{6\omega_0^2} \right] \cos(3\omega t) + A\left[ 2\omega_0\omega_3 + \frac{5A^2\alpha^2}{6\omega_0^2} - \frac{3}{4}A^2\beta \right] \cos(\omega t)$
+
+(Left as an exercise to get there)
+
+Since we need to remove any resonant terms we must set:
+
+$latex 2\omega_0 \omega_2 + \frac{5 A^2 \alpha^2}{6\omega_0^2} - \frac{3}{4}A^2 \beta = 0$
+
+Giving us $latex \omega_2 = \left( \frac{3 \beta}{8\omega_0} - \frac{5 \alpha^2}{12\omega_0^2} \right) A^2$.
+
+We can then solve for $latex x_3$ obtaining:
+
+$latex x_3 = \frac{A^3}{16\omega_0^2} \left(\frac{\alpha^2}{3\omega_0^2} + \frac{1}{2}\beta \right) \cos(3\omega t) $
+
+Note how the terms we found are of the order of amplitude we predicted them to be.
+
+In conclusion, the perturbation theory is a good method to obtain approximations to the real solution of situation where we have a motion that was perturbed from a normal behavior. Its ability to approximate depends, however, on the size of the perturbation and the nature of the perturbation. When necessary to do an approximation using this method, check that the size of the amplitude still allows for the increase in order of smallness as you find more terms.
+
+References: Laundau Volume 1 - Mechanics

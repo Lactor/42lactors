@@ -1,0 +1,60 @@
+The last post concerned about perturbation theory. A method used to approximate solution which was based on the idea of a solution we already know which has been slightly perturbed. Unfortunately this method is not always the best. Today I will present a different method called in Strogatz's "Nonlinear Dynamics and Chaos" as Two Timing. 
+
+The idea of this approximation method is to make use of the different timescales of the function. To explain this idea I will use the example I will be solving afterwards. 
+
+Imagine you have damped harmonic oscillator. At first there doesn't seem to exist two timescales, it is simply a harmonic motion whose amplitude decreases with time, however there are two time scales associated with the motion, the first gives us the timescale of the vibrations while the other gives the timescale of the exponential decrease. 
+
+The idea becomes to write our function of time, as a function of two times $latex \tau = t$ and $latex T = \epsilon t$. Since $latex \epsilon $ corresponds to a small factor, then we have that $latex \tau $ will be a fast time while $latex T $ will be a slow timescale. This means that in the timescale of $latex \tau $ the variables in terms of $latex T $ will remain constant, meaning that if we have $latex f(T) $ then $latex \partial_\tau f(T) = 0$. ($latex \partial_\tau $ is the derivative in terms of $latex \tau $). 
+
+Then if we have: 
+
+$latex x(t) = x(\tau, T) \Rightarrow \dot x = \partial_\tau x + \epsilon \partial_T x $ The last term comes from the definition of $latex T $ and the chain rule. 
+
+We can also write: 
+
+$latex \ddot x = \partial_{\tau \tau} x + 2\epsilon \partial_{\tau T} x+ \epsilon^2 \partial_{TT} x $ 
+
+Now like perturbation theory we take our function to be  power series on the same variable $latex \epsilon $ 
+
+$latex x = x_0 +  \epsilon x_1 + \epsilon^2 x_2 + ... $, where $latex x_i$ does not depend on $latex \epsilon$ 
+
+Now let's use an example to better understand this method. We are going to try to solve the damped harmonic oscillator, a system we know the solution however will serve fine to illustrate the method. $ \ddot x + 2\epsilon \dot x + x = 0$ whose analytical solution will be $latex e^{-\epsilon t} C\sin(\sqrt{1-\epsilon^2} t + \phi) $.
+
+Let's write with our approximation. (We just want an approximation to the first order of $latex \epsilon $)
+
+$latex x = x_0(\tau, T) + \epsilon x_1(\tau, T) $
+$latex \ddot x + 2\epsilon \dot x + x = 0 \Rightarrow$
+$latex  \partial_{\tau\tau}x_0 + x_0 + \epsilon[ 2\partial_\tau x_0 +2\partial_{\tau T} x_0 + \partial_{\tau\tau}x_1 + x_1] + O(\epsilon^2) = 0 $
+
+Since we have two set of terms of different order of magnitude we can say that both must equal 0, meaning:
+
+$latex \partial_{\tau\tau}x_0 + x_0 = 0 \Rightarrow x_0 = A\sin(\tau) + B\cos(\tau) $
+$latex 2\partial_\tau x_0 +2\partial_{\tau T} x_0 + \partial_{\tau\tau}x_1 + x_1 = 0$
+
+Since the partial derivatives in the first equation are in respect to $latex \tau $ then, we have that $latex A $ and $latex B $ can be function of $latex T $.
+
+Plugging in $latex x_0 $ into the second equation, we get:
+
+$latex \partial_{\tau\tau} x_1 + x_1 = 2(A + \partial_{T}A) \cos(\tau) - 2(B + \partial_{T}) \sin(\tau) $
+
+(Remember that we take funtions of $latex \tau $ as constants when we derive by $\latex T $)
+
+However the equation we have gives rise to ressonance, which cannot be the answer, since it implied that $latex x_1 $ could grow unbounded. This means that $latex A + \partial_T A  = 0 $ and  $latex B + \partial_T B  = 0 $, giving rise to the solutions:
+
+$latex A = A(0)e^{-T} \text{ and } B = B(0)e^{-T} $
+
+This means we have our solution for $latex x_0 $:
+
+$latex x_0 = A_0e^{-\epsilon t}\sin(t) + B_0e^{\epsilon t}\cos(t)$
+
+Even not considering the other terms we it to be very close to the actual solution.
+
+$latex x_{approx} =  A_0e^{-\epsilon t}\sin(t) + B_0e^{\epsilon t}\cos(t) + O(\epsilon)$
+$latex x_{real} = A_0e^{-\epsilon t} \sin( sqrt{1-\epsilon^2} t) + B_0e^{-\epsilon t} \cos( sqrt{1-\epsilon^2} t) $
+
+
+Although this case is not very representative, the method outline here can be used to approximate a function which has different timescales. It also becomes a good way of predicting to what values a system evolves and stabilizes on.
+
+References: ``Nonlinear Dynamiscs and Chaos'' - Steven H. Strogatz
+
+
